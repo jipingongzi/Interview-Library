@@ -12,7 +12,7 @@ public class LibraryServiceImpl implements ILibraryService {
 
     @Override
     public void addBook(String bookName, String author, Integer quantity, Admin admin) {
-        if(admin == null){
+        if (admin == null) {
             LogUtil.log("Please login admin first.");
             return;
         }
@@ -32,7 +32,7 @@ public class LibraryServiceImpl implements ILibraryService {
 
     @Override
     public void deleteBook(String bookName, String author, Admin admin) {
-        if(admin == null){
+        if (admin == null) {
             LogUtil.log("Please login admin first.");
             return;
         }
@@ -59,7 +59,7 @@ public class LibraryServiceImpl implements ILibraryService {
             LogUtil.log(String.format("%d. Book \"%s\" - \"%s\" - inventory: %d.",
                     i, book.getName(), book.getAuthor(), book.getAvailableInventory()));
         }
-        return (List<Book>) books;
+        return new ArrayList<>(books);
     }
 
     @Override
@@ -77,26 +77,34 @@ public class LibraryServiceImpl implements ILibraryService {
     @Override
     public void borrowBook(String bookName, String author, Member member) {
         Book book = getValidBook(bookName, author);
-        if(member == null || book == null){
+        if (member == null || book == null) {
             return;
         }
-        member.borrowBook(book);
-        book.borrowBook();
+        Boolean memberFlag = member.borrowBook(book);
+        if (memberFlag) {
+            Boolean bookFlag = member.borrowBook(book);
+            if(bookFlag) {
+                LogUtil.log(String.format("Book %s successfully borrowed", bookName));
+            }
+        }
     }
 
     @Override
     public void returnBook(String bookName, String author, Member member) {
         Book book = getValidBook(bookName, author);
-        if(member == null || book == null){
+        if (member == null || book == null) {
             return;
         }
-        member.returnBook(book);
-        book.returnBook();
+        Boolean flag = member.returnBook(book);
+        if (flag) {
+            book.returnBook();
+            LogUtil.log(String.format("Book %s successfully returned.", bookName));
+        }
     }
 
-    private Book getValidBook(String bookName, String author){
+    private Book getValidBook(String bookName, String author) {
         String key = getBookKey(bookName, author);
-        if(!bookMap.containsKey(key)){
+        if (!bookMap.containsKey(key)) {
             LogUtil.log("No such book");
             return null;
         }

@@ -12,17 +12,20 @@ public class Book {
         this.name = name;
         this.author = author;
         this.inventory = inventory;
+        this.availableInventory = inventory;
     }
 
     public void addInventory(Integer inventory){
         this.inventory = this.inventory + inventory;
     }
 
-    public void borrowBook(){
+    public Boolean borrowBook(){
         if(this.availableInventory > 0) {
             this.availableInventory = this.availableInventory - 1;
+            return true;
         } else {
             LogUtil.log("No available Inventory.");
+            return false;
         }
     }
 
