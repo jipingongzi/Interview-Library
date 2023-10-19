@@ -5,7 +5,7 @@ import org.sean.library.model.user.User;
 
 public interface IUserService {
 
-    Boolean login(String userName, String pwd);
+    User login(String userName, String pwd);
 
     void register(String userName, String pwd, UserType type);
 

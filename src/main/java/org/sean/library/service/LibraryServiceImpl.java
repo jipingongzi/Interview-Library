@@ -82,7 +82,7 @@ public class LibraryServiceImpl implements ILibraryService {
         }
         Boolean memberFlag = member.borrowBook(book);
         if (memberFlag) {
-            Boolean bookFlag = member.borrowBook(book);
+            Boolean bookFlag = book.borrowBook();
             if(bookFlag) {
                 LogUtil.log(String.format("Book %s successfully borrowed", bookName));
             }

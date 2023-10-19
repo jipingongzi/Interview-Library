@@ -15,10 +15,10 @@ public class UserServiceImpl implements IUserService {
     private final Map<String, User> userMap = new HashMap<>();
 
     @Override
-    public Boolean login(String userName, String pwd) {
+    public User login(String userName, String pwd) {
         if (!userMap.containsKey(userName)) {
             LogUtil.log("User not exist");
-            return false;
+            return null;
         }
         User user = userMap.get(userName);
         String originalPwd = user.getPwd();
@@ -30,10 +30,10 @@ public class UserServiceImpl implements IUserService {
                 currentUser = user;
                 LogUtil.log(String.format("Admin %s successfully logged in.", userName));
             }
-            return true;
+            return currentUser;
         } else {
             LogUtil.log("User name or pwd incorrect.");
-            return false;
+            return null;
         }
     }
 
