@@ -62,3 +62,12 @@ Book "Clean Code" inventory successfully updated, new inventory: 8.
 4. Command-line Interface Design: Provide a simple and easy-to-use command-line interaction interface for users and administrators. The interface should support borrowing and returning multiple books by specifying the book title and handling special cases like merging inventory and restricting deletion.
 5. Code Quality: Ensure clear code structure, readability, and appropriate comments.
 6. Provide multiple scenario test cases.
+
+# Stage2
+
+1. Admin can know who borrow the book
+```
+check "Clean Code" "Robert C. Martin"
+Alice
+Car
+```
